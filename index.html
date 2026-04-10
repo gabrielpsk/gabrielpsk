@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Portfólio de Gabriel Piske — Engenharia de Software, Hardware e projetos inovadores."/>
+  <title>Gabriel Piske</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f4f1eb;
+      --bg2:      #eae6dd;
+      --ink:      #1c1917;
+      --ink2:     #44403c;
+      --ink3:     #78716c;
+      --accent:   #c0392b;
+      --accent2:  #e67e22;
+      --line:     rgba(28,25,23,0.12);
+      --card:     #ffffff;
+      --radius:   3px;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+
+    /* ── NOISE TEXTURE ─────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      opacity: 0.4;
+      z-index: 9999;
+    }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 5vw;
+      background: rgba(244,241,235,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink3);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ──────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 5vw 7rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem, 22vw, 22rem);
+      font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(28,25,23,0.06);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: rise 0.7s ease forwards 0.3s;
+    }
+
+    .hero-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      opacity: 0;
+      animation: rise 0.7s ease forwards 0.5s;
+    }
+
+    .hero-heading em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 2rem;
+      max-width: 520px;
+      font-size: 1rem;
+      color: var(--ink2);
+      line-height: 1.75;
+      opacity: 0;
+      animation: rise 0.7s ease forwards 0.7s;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: rise 0.7s ease forwards 0.9s;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.6rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: var(--radius);
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--line);
+    }
+    .btn-outline:hover { border-color: var(--ink); background: var(--bg2); }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem; right: 5vw;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      writing-mode: vertical-rl;
+      opacity: 0;
+      animation: rise 0.7s ease forwards 1.2s;
+    }
+
+    /* ── SECTIONS ──────────────────────────────── */
+    .section {
+      padding: 7rem 5vw;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-full {
+      padding: 7rem 5vw;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 3.5rem;
+    }
+
+    .heading em { font-style: italic; color: var(--accent); }
+
+    /* ── SOBRE ─────────────────────────────────── */
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .sobre-text p {
+      font-size: 1.05rem;
+      color: var(--ink2);
+      margin-bottom: 1.2rem;
+      line-height: 1.8;
+    }
+
+    .sobre-text p strong { color: var(--ink); }
+
+    .sobre-aside {
+      border-left: 2px solid var(--line);
+      padding-left: 2.5rem;
+    }
+
+    .aside-block { margin-bottom: 2.5rem; }
+
+    .aside-title {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      margin-bottom: 0.8rem;
+    }
+
+    .aside-item {
+      font-size: 0.9rem;
+      color: var(--ink2);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .aside-item span { color: var(--ink3); font-size: 0.8rem; }
+
+    /* ── PROJETOS ──────────────────────────────── */
+    #projetos { background: var(--bg2); }
+
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.5px;
+      border: 1.5px solid var(--line);
+    }
+
+    .proj-card {
+      background: var(--card);
+      padding: 2rem 2rem 2.5rem;
+      border: 1px solid transparent;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .proj-card:hover {
+      z-index: 2;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .proj-number {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--ink3);
+      margin-bottom: 1rem;
+    }
+
+    .proj-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+      line-height: 1.25;
+    }
+
+    .proj-origin {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .proj-desc {
+      font-size: 0.88rem;
+      color: var(--ink2);
+      line-height: 1.75;
+    }
+
+    .proj-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1.4rem;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: 2px;
+      color: var(--ink3);
+      background: var(--bg);
+    }
+
+    /* ── EXPERIÊNCIA ───────────────────────────── */
+    .exp-list { max-width: 780px; }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .exp-item:last-child { border-bottom: none; }
+
+    .exp-org {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ink3);
+      letter-spacing: 0.03em;
+      padding-top: 0.15rem;
+      line-height: 1.5;
+    }
+
+    .exp-role {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+
+    .exp-desc {
+      font-size: 0.88rem;
+      color: var(--ink2);
+      line-height: 1.75;
+    }
+
+    /* ── HABILIDADES ───────────────────────────── */
+    #habilidades { background: var(--bg2); }
+
+    .skills-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .skill-block {
+      background: var(--card);
+      padding: 1.8rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .skill-block-title {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .skill-list {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    .skill-pill {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink2);
+      background: var(--bg);
+      padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+      border: 1px solid var(--line);
+    }
+
+    /* ── FORMAÇÃO ──────────────────────────────── */
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .edu-card {
+      padding: 1.6rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--card);
+      transition: border-color 0.2s;
+    }
+
+    .edu-card:hover { border-color: var(--accent); }
+
+    .edu-degree {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 0.35rem;
+      line-height: 1.4;
+    }
+
+    .edu-inst {
+      font-size: 0.78rem;
+      color: var(--ink3);
+    }
+
+    /* ── CONTATO ───────────────────────────────── */
+    #contato {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    #contato .heading { color: var(--bg); }
+    #contato .label { color: var(--accent2); }
+
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .contato-text p {
+      font-size: 1rem;
+      color: rgba(244,241,235,0.65);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .contato-links { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .contato-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border: 1px solid rgba(244,241,235,0.12);
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .contato-link:hover {
+      background: rgba(244,241,235,0.06);
+      border-color: rgba(244,241,235,0.3);
+    }
+
+    .contato-link-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(244,241,235,0.4);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    .contato-link-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--bg);
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(244,241,235,0.08);
+      padding: 2rem 5vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: rgba(244,241,235,0.3);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────── */
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 900px) {
+      .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .sobre-aside { border-left: none; border-top: 2px solid var(--line); padding-left: 0; padding-top: 2rem; }
+      .contato-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .skills-layout { grid-template-columns: 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .proj-grid { grid-template-columns: 1fr; }
+      .hero-heading { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-name">Gabriel Piske</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#projetos">Projetos</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#habilidades">Skills</a></li>
+    <li><a href="#formacao">Formação</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-text" aria-hidden="true">GP</div>
+  <p class="hero-eyebrow">Brasília, DF &mdash; Engenharia de Software</p>
+  <h1 class="hero-heading">Gabriel<br/><em>Piske</em></h1>
+  <p class="hero-sub">
+    Construo coisas que me interessam — software, hardware, próteses, turbinas,
+    drones e, às vezes, computadores feitos do zero com peças recicladas.
+    Estudante de Engenharia de Software na UnB. Medalhista OBT (MIT &amp; ITA).
+  </p>
+  <div class="hero-actions">
+    <a href="curriculo_gabriel.pdf" download class="btn btn-primary">
+      ↓ Baixar Currículo
+    </a>
+    <a href="#projetos" class="btn btn-outline">Ver projetos</a>
+  </div>
+  <span class="hero-scroll-hint">scroll</span>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" class="section">
+  <p class="label reveal">Quem sou</p>
+  <h2 class="heading reveal">Um pouco<br/><em>sobre mim</em></h2>
+
+  <div class="sobre-grid">
+    <div class="sobre-text reveal">
+      <p>
+        Sou de Brasília, estudo Engenharia de Software na UnB e tenho uma relação muito direta com a ideia de
+        <strong>construir coisas do zero</strong>. Turbina eólica sustentável, prótese de braço com sensores,
+        computador montado a partir de peças recicladas.
+      </p>
+      <p>
+        Meu interesse maior está em <strong>backend e hardware</strong>: adoro quando software e eletrônica
+        se encontram. Trabalho com C/C++, Arduino, sistemas embarcados e tenho noções de cibersegurança
+        (TryHackMe, Kali Linux). Também sei trabalhar com HTML, CSS, terminal Linux e PowerShell.
+      </p>
+      <p>
+        Fora da engenharia, dou aulas de xadrez, já palestrei sobre energia eólica e indução eletromagnética,
+        conduzi monitorias de Relatividade Geral e estou escrevendo um livro chamado
+        <strong>"A Singularidade do Cosmos"</strong> — sobre astronomia, astronáutica e física avançada.
+      </p>
+      <p>Inglês fluente. Alemão básico.</p>
+    </div>
+
+    <div class="sobre-aside reveal">
+      <div class="aside-block">
+        <p class="aside-title">Certificações em destaque</p>
+        <div class="aside-item">Medalha OBT <span>MIT &amp; ITA</span></div>
+        <div class="aside-item">Medalha Canguru <span>Matemática</span></div>
+        <div class="aside-item">Propulsores de Foguetes <span>UnB</span></div>
+        <div class="aside-item">Excel &amp; Word <span>Sebrae</span></div>
+      </div>
+      <div class="aside-block">
+        <p class="aside-title">Idiomas</p>
+        <div class="aside-item">Português <span>Nativo</span></div>
+        <div class="aside-item">Inglês <span>Fluente</span></div>
+        <div class="aside-item">Alemão <span>Básico</span></div>
+      </div>
+      <div class="aside-block">
+        <p class="aside-title">Formação</p>
+        <div class="aside-item">Eng. de Software <span>UnB — em curso</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<div id="projetos" class="section-full">
+  <div class="section-inner">
+    <p class="label reveal">O que já fiz</p>
+    <h2 class="heading reveal">Projetos de<br/><em>destaque</em></h2>
+  </div>
+  <div class="proj-grid">
+
+    <div class="proj-card reveal">
+      <p class="proj-number">01</p>
+      <h3 class="proj-title">Drone — COP 30</h3>
+      <p class="proj-origin">Projeto em grupo &middot; Prof. Gilamara Isabel</p>
+      <p class="proj-desc">Design e desenvolvimento de um drone em equipe, vinculado à COP 30. Envolveu engenharia aeronáutica, eletrônica embarcada e discussão sobre sustentabilidade aplicada à tecnologia.</p>
+      <div class="proj-tags">
+        <span class="tag">Hardware</span>
+        <span class="tag">Embarcados</span>
+        <span class="tag">Grupo</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">02</p>
+      <h3 class="proj-title">Ruby — Coleta Seletiva</h3>
+      <p class="proj-origin">OBT Medalha (MIT &amp; ITA) &middot; Figma</p>
+      <p class="proj-desc">Aplicativo desenvolvido em grupo no Figma para tornar a coleta seletiva sustentável mais acessível à população. O projeto conquistou medalha na Olimpíada Brasileira de Tecnologia, certificada pelo MIT e ITA.</p>
+      <div class="proj-tags">
+        <span class="tag">UX/UI</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Sustentabilidade</span>
+        <span class="tag">OBT</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">03</p>
+      <h3 class="proj-title">Prótese de Braço Biomecânica</h3>
+      <p class="proj-origin">Projeto individual &middot; Colégio Marista</p>
+      <p class="proj-desc">Prótese com sensores que mimetizavam os movimentos do membro original. Desenvolvi sozinho, integrando eletrônica embarcada, programação de microcontroladores e mecânica estrutural.</p>
+      <div class="proj-tags">
+        <span class="tag">Arduino</span>
+        <span class="tag">Sensores</span>
+        <span class="tag">Biomecânica</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">04</p>
+      <h3 class="proj-title">Turbina Eólica Sustentável</h3>
+      <p class="proj-origin">Projeto individual &middot; Colégio Marista</p>
+      <p class="proj-desc">Projetei e construí sozinho uma turbina eólica parcialmente biodegradável, explorando materiais sustentáveis, aerodinâmica e princípios de geração de energia.</p>
+      <div class="proj-tags">
+        <span class="tag">Engenharia</span>
+        <span class="tag">Sustentabilidade</span>
+        <span class="tag">Energia</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">05</p>
+      <h3 class="proj-title">Computador de Peças Recicladas</h3>
+      <p class="proj-origin">Projeto pessoal</p>
+      <p class="proj-desc">Montei um computador funcional usando exclusivamente componentes descartados. O exercício forçou um entendimento muito concreto de arquitetura de hardware, compatibilidade e diagnóstico de componentes.</p>
+      <div class="proj-tags">
+        <span class="tag">Hardware</span>
+        <span class="tag">Reciclagem</span>
+        <span class="tag">Arquitetura</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">06</p>
+      <h3 class="proj-title">Jammer ESP32</h3>
+      <p class="proj-origin">Projeto de hardware pessoal</p>
+      <p class="proj-desc">Desenvolvimento de um jammer com microcontrolador ESP32, dentro dos limites legais. Aprofundou meu entendimento de radiofrequência, comunicação sem fio e cibersegurança aplicada a hardware.</p>
+      <div class="proj-tags">
+        <span class="tag">ESP32</span>
+        <span class="tag">RF</span>
+        <span class="tag">Cibersegurança</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">07</p>
+      <h3 class="proj-title">Impressão 3D e Prototipagem</h3>
+      <p class="proj-origin">Projetos variados</p>
+      <p class="proj-desc">Experiência prática com modelagem e impressão 3D aplicada a protótipos de engenharia. Uso como ferramenta de iteração rápida em projetos de hardware.</p>
+      <div class="proj-tags">
+        <span class="tag">Impressão 3D</span>
+        <span class="tag">Prototipagem</span>
+      </div>
+    </div>
+
+    <div class="proj-card reveal">
+      <p class="proj-number">08</p>
+      <h3 class="proj-title">A Singularidade do Cosmos</h3>
+      <p class="proj-origin">Livro autoral &middot; em escrita &middot; sem previsão de publicação</p>
+      <p class="proj-desc">Estou escrevendo um livro sobre astronomia, astronáutica e física avançada. É um projeto pessoal de longo prazo que me obriga a dominar o que escrevo — não existe atalho para explicar relatividade ou mecânica orbital de forma honesta.</p>
+      <div class="proj-tags">
+        <span class="tag">Astronomia</span>
+        <span class="tag">Física</span>
+        <span class="tag">Escrita</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia" class="section">
+  <p class="label reveal">Trajetória</p>
+  <h2 class="heading reveal"><em>Experiências</em></h2>
+
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-org">Los Manos Burguer<br/>iFood · Brasília, DF</div>
+      <div>
+        <p class="exp-role">Fundador e Administrador</p>
+        <p class="exp-desc">Criei e operei um negócio gastronômico com atuação via iFood. Cuidei de tudo — cardápio, precificação, gestão financeira, logística e atendimento. Aprendi que administrar um negócio pequeno exige mais disciplina do que qualquer outra coisa.</p>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-org">Autônomo<br/>Brasília, DF</div>
+      <div>
+        <p class="exp-role">Professor Particular</p>
+        <p class="exp-desc">Aulas individuais de Matemática, Física, Química e História. Aprendi que ensinar bem exige entender o aluno antes de entender o conteúdo. Desenvolvi material didático personalizado para cada perfil.</p>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-org">Col. Marista Champagnat<br/>Brasília, DF</div>
+      <div>
+        <p class="exp-role">Professor de Xadrez — Básico ao Avançado</p>
+        <p class="exp-desc">Ministrei aulas de xadrez para alunos de todos os níveis. O xadrez é uma das melhores ferramentas para desenvolver raciocínio antecipativo e tolerância à derrota — duas coisas que fazem falta em qualquer área.</p>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-org">Colégio Marista<br/>Brasília, DF</div>
+      <div>
+        <p class="exp-role">Palestrante — Energia Eólica e Indução Eletromagnética</p>
+        <p class="exp-desc">Palestras sobre energia eólica e indução eletromagnética para alunos do colégio. Comunicar física de forma que faça sentido sem simplificar demais é um desafio que ainda me interessa muito.</p>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-org">Colégio Marista<br/>Brasília, DF</div>
+      <div>
+        <p class="exp-role">Monitor de Relatividade Geral</p>
+        <p class="exp-desc">Conduzi monitorias sobre Relatividade Geral para colegas. É um dos temas mais difíceis de explicar bem — e justamente por isso um dos mais satisfatórios quando o entendimento acontece.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HABILIDADES -->
+<div id="habilidades" class="section-full">
+  <div class="section-inner">
+    <p class="label reveal">O que uso</p>
+    <h2 class="heading reveal">Habilidades<br/><em>técnicas</em></h2>
+    <div class="skills-layout">
+
+      <div class="skill-block reveal">
+        <p class="skill-block-title">Linguagens</p>
+        <div class="skill-list">
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+        </div>
+      </div>
+
+      <div class="skill-block reveal">
+        <p class="skill-block-title">Hardware & Embarcados</p>
+        <div class="skill-list">
+          <span class="skill-pill">Arduino</span>
+          <span class="skill-pill">ESP32</span>
+          <span class="skill-pill">Impressão 3D</span>
+          <span class="skill-pill">Prototipagem</span>
+          <span class="skill-pill">Sistemas Embarcados</span>
+        </div>
+      </div>
+
+      <div class="skill-block reveal">
+        <p class="skill-block-title">Ferramentas</p>
+        <div class="skill-list">
+          <span class="skill-pill">VS Code</span>
+          <span class="skill-pill">GitHub</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">PowerShell</span>
+          <span class="skill-pill">Figma</span>
+          <span class="skill-pill">Excel</span>
+          <span class="skill-pill">Word</span>
+        </div>
+      </div>
+
+      <div class="skill-block reveal">
+        <p class="skill-block-title">Cibersegurança</p>
+        <div class="skill-list">
+          <span class="skill-pill">TryHackMe</span>
+          <span class="skill-pill">Kali Linux</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FORMAÇÃO -->
+<section id="formacao" class="section">
+  <p class="label reveal">Educação</p>
+  <h2 class="heading reveal">Formação e<br/><em>certificações</em></h2>
+  <div class="edu-grid">
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Bacharelado em Engenharia de Software — Em andamento</p>
+      <p class="edu-inst">Universidade de Brasília (UnB) · Brasília, DF</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Curso de Propulsores de Foguetes</p>
+      <p class="edu-inst">Universidade de Brasília (UnB)</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Medalha — Olimpíada Brasileira de Tecnologia (OBT)</p>
+      <p class="edu-inst">Certificada pelo MIT e ITA · App Ruby</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Medalha — Canguru de Matemática</p>
+      <p class="edu-inst">Competição Internacional de Matemática</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Excel — Curso Completo</p>
+      <p class="edu-inst">Sebrae</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Word — Curso Completo</p>
+      <p class="edu-inst">Sebrae</p>
+    </div>
+
+    <div class="edu-card reveal">
+      <p class="edu-degree">Outros certificados de olimpíadas</p>
+      <p class="edu-inst">Diversas competições científicas e tecnológicas nacionais</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTATO -->
+<div id="contato" class="section-full">
+  <div class="section-inner">
+    <p class="label reveal">Fale comigo</p>
+    <h2 class="heading reveal">Contato</h2>
+    <div class="contato-grid">
+      <div class="contato-text reveal">
+        <p>Se quiser conversar sobre projetos, colaborações ou oportunidades, pode me chamar pelo e-mail ou telefone abaixo.</p>
+        <p>Também está disponível o download do meu currículo em PDF.</p>
+        <br/>
+        <a href="curriculo_gabriel.pdf" download class="btn btn-primary">↓ Baixar Currículo PDF</a>
+      </div>
+      <div class="contato-links reveal">
+        <a href="mailto:gabrielpsk1402@gmail.com" class="contato-link">
+          <div>
+            <span class="contato-link-label">E-mail</span>
+            <span class="contato-link-value">gabrielpsk1402@gmail.com</span>
+          </div>
+        </a>
+        <a href="tel:+5561992142825" class="contato-link">
+          <div>
+            <span class="contato-link-label">Telefone</span>
+            <span class="contato-link-value">(61) 99214-2825</span>
+          </div>
+        </a>
+        <div class="contato-link">
+          <div>
+            <span class="contato-link-label">Localização</span>
+            <span class="contato-link-value">Brasília, DF — Brasil</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>Gabriel Piske de Souza Mello Barbosa</span>
+  <span>Brasília, DF &mdash; Brasil</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
