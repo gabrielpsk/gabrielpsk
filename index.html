@@ -3,934 +3,371 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Portfólio de Gabriel Piske — Engenharia de Software, Hardware e projetos inovadores."/>
+  <meta name="description" content="Portfolio of Gabriel Piske — Software Engineering, Hardware and innovative projects."/>
   <title>Gabriel Piske</title>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg:       #f4f1eb;
-      --bg2:      #eae6dd;
-      --ink:      #1c1917;
-      --ink2:     #44403c;
-      --ink3:     #78716c;
-      --accent:   #c0392b;
-      --accent2:  #e67e22;
-      --line:     rgba(28,25,23,0.12);
-      --card:     #ffffff;
-      --radius:   3px;
+      --bg:#f4f1eb; --bg2:#eae6dd; --ink:#1c1917; --ink2:#44403c; --ink3:#78716c;
+      --accent:#c0392b; --line:rgba(28,25,23,0.12); --card:#ffffff; --radius:3px;
     }
-
     html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.7;
-    }
-
-    /* ── NOISE TEXTURE ─────────────────────────── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      opacity: 0.4;
-      z-index: 9999;
-    }
-
-    /* ── NAV ───────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.1rem 5vw;
-      background: rgba(244,241,235,0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .nav-name {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: var(--ink);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-    }
-
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--ink3);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ── HERO ──────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 5vw 7rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-bg-text {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(8rem, 22vw, 22rem);
-      font-weight: 700;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(28,25,23,0.06);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -0.04em;
-    }
-
-    .hero-eyebrow {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.2rem;
-      opacity: 0;
-      animation: rise 0.7s ease forwards 0.3s;
-    }
-
-    .hero-heading {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 9vw, 7.5rem);
-      font-weight: 700;
-      line-height: 0.95;
-      letter-spacing: -0.03em;
-      color: var(--ink);
-      opacity: 0;
-      animation: rise 0.7s ease forwards 0.5s;
-    }
-
-    .hero-heading em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-sub {
-      margin-top: 2rem;
-      max-width: 520px;
-      font-size: 1rem;
-      color: var(--ink2);
-      line-height: 1.75;
-      opacity: 0;
-      animation: rise 0.7s ease forwards 0.7s;
-    }
-
-    .hero-actions {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      margin-top: 2.5rem;
-      opacity: 0;
-      animation: rise 0.7s ease forwards 0.9s;
-    }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.75rem 1.6rem;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: var(--radius);
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
-    }
-
-    .btn-primary {
-      background: var(--ink);
-      color: var(--bg);
-    }
-    .btn-primary:hover { background: var(--accent); }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--ink);
-      border: 1.5px solid var(--line);
-    }
-    .btn-outline:hover { border-color: var(--ink); background: var(--bg2); }
-
-    .hero-scroll-hint {
-      position: absolute;
-      bottom: 2.5rem; right: 5vw;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink3);
-      writing-mode: vertical-rl;
-      opacity: 0;
-      animation: rise 0.7s ease forwards 1.2s;
-    }
-
-    /* ── SECTIONS ──────────────────────────────── */
-    .section {
-      padding: 7rem 5vw;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-full {
-      padding: 7rem 5vw;
-    }
-
-    .section-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .label {
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.6rem;
-    }
-
-    .heading {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 3.5rem;
-    }
-
-    .heading em { font-style: italic; color: var(--accent); }
-
-    /* ── SOBRE ─────────────────────────────────── */
-    .sobre-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 6rem;
-      align-items: start;
-    }
-
-    .sobre-text p {
-      font-size: 1.05rem;
-      color: var(--ink2);
-      margin-bottom: 1.2rem;
-      line-height: 1.8;
-    }
-
-    .sobre-text p strong { color: var(--ink); }
-
-    .sobre-aside {
-      border-left: 2px solid var(--line);
-      padding-left: 2.5rem;
-    }
-
-    .aside-block { margin-bottom: 2.5rem; }
-
-    .aside-title {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink3);
-      margin-bottom: 0.8rem;
-    }
-
-    .aside-item {
-      font-size: 0.9rem;
-      color: var(--ink2);
-      padding: 0.3rem 0;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-
-    .aside-item span { color: var(--ink3); font-size: 0.8rem; }
-
-    /* ── PROJETOS ──────────────────────────────── */
-    #projetos { background: var(--bg2); }
-
-    .proj-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5px;
-      border: 1.5px solid var(--line);
-    }
-
-    .proj-card {
-      background: var(--card);
-      padding: 2rem 2rem 2.5rem;
-      border: 1px solid transparent;
-      transition: all 0.25s;
-      position: relative;
-    }
-
-    .proj-card:hover {
-      z-index: 2;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-      transform: translateY(-2px);
-    }
-
-    .proj-number {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      color: var(--ink3);
-      margin-bottom: 1rem;
-    }
-
-    .proj-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--ink);
-      margin-bottom: 0.6rem;
-      line-height: 1.25;
-    }
-
-    .proj-origin {
-      font-size: 0.78rem;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 1rem;
-    }
-
-    .proj-desc {
-      font-size: 0.88rem;
-      color: var(--ink2);
-      line-height: 1.75;
-    }
-
-    .proj-tags {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      margin-top: 1.4rem;
-    }
-
-    .tag {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border: 1px solid var(--line);
-      border-radius: 2px;
-      color: var(--ink3);
-      background: var(--bg);
-    }
-
-    /* ── EXPERIÊNCIA ───────────────────────────── */
-    .exp-list { max-width: 780px; }
-
-    .exp-item {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .exp-item:last-child { border-bottom: none; }
-
-    .exp-org {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--ink3);
-      letter-spacing: 0.03em;
-      padding-top: 0.15rem;
-      line-height: 1.5;
-    }
-
-    .exp-role {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-
-    .exp-desc {
-      font-size: 0.88rem;
-      color: var(--ink2);
-      line-height: 1.75;
-    }
-
-    /* ── HABILIDADES ───────────────────────────── */
-    #habilidades { background: var(--bg2); }
-
-    .skills-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .skill-block {
-      background: var(--card);
-      padding: 1.8rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-    }
-
-    .skill-block-title {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .skill-list {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
-
-    .skill-pill {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--ink2);
-      background: var(--bg);
-      padding: 0.35rem 0.85rem;
-      border-radius: 100px;
-      border: 1px solid var(--line);
-    }
-
-    /* ── FORMAÇÃO ──────────────────────────────── */
-    .edu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .edu-card {
-      padding: 1.6rem;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--card);
-      transition: border-color 0.2s;
-    }
-
-    .edu-card:hover { border-color: var(--accent); }
-
-    .edu-degree {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 0.35rem;
-      line-height: 1.4;
-    }
-
-    .edu-inst {
-      font-size: 0.78rem;
-      color: var(--ink3);
-    }
-
-    /* ── CONTATO ───────────────────────────────── */
-    #contato {
-      background: var(--ink);
-      color: var(--bg);
-    }
-
-    #contato .heading { color: var(--bg); }
-    #contato .label { color: var(--accent2); }
-
-    .contato-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
-    }
-
-    .contato-text p {
-      font-size: 1rem;
-      color: rgba(244,241,235,0.65);
-      line-height: 1.8;
-      margin-bottom: 1rem;
-    }
-
-    .contato-links { display: flex; flex-direction: column; gap: 0.8rem; }
-
-    .contato-link {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.2rem;
-      border: 1px solid rgba(244,241,235,0.12);
-      border-radius: var(--radius);
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-
-    .contato-link:hover {
-      background: rgba(244,241,235,0.06);
-      border-color: rgba(244,241,235,0.3);
-    }
-
-    .contato-link-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(244,241,235,0.4);
-      display: block;
-      margin-bottom: 0.15rem;
-    }
-
-    .contato-link-value {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--bg);
-    }
-
-    /* ── FOOTER ────────────────────────────────── */
-    footer {
-      background: var(--ink);
-      border-top: 1px solid rgba(244,241,235,0.08);
-      padding: 2rem 5vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: rgba(244,241,235,0.3);
-      letter-spacing: 0.05em;
-    }
-
-    /* ── ANIMATIONS ────────────────────────────── */
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── RESPONSIVE ────────────────────────────── */
-    @media (max-width: 900px) {
-      .sobre-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .sobre-aside { border-left: none; border-top: 2px solid var(--line); padding-left: 0; padding-top: 2rem; }
-      .contato-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .skills-layout { grid-template-columns: 1fr; }
-      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    }
-
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .proj-grid { grid-template-columns: 1fr; }
-      .hero-heading { font-size: 3rem; }
-    }
+    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; }
+    body::after { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events:none; opacity:0.4; z-index:9999; }
+
+    nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.1rem 5vw; background:rgba(244,241,235,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+    .nav-name { font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem; color:var(--ink); text-decoration:none; }
+    .nav-right { display:flex; align-items:center; gap:2rem; }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { font-size:0.8rem; font-weight:500; color:var(--ink3); text-decoration:none; letter-spacing:0.04em; text-transform:uppercase; transition:color 0.2s; }
+    .nav-links a:hover { color:var(--accent); }
+
+    .lang-btn { display:flex; align-items:center; gap:0.4rem; font-family:'Space Grotesk',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); background:transparent; border:1.5px solid var(--line); padding:0.35rem 0.85rem; border-radius:var(--radius); cursor:pointer; transition:all 0.2s; }
+    .lang-btn:hover { color:var(--accent); border-color:var(--accent); }
+    .lang-btn .flag { font-size:14px; }
+
+    #hero { min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:0 5vw 7rem; position:relative; overflow:hidden; }
+    .hero-bg-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Playfair Display',serif; font-size:clamp(8rem,22vw,22rem); font-weight:700; color:transparent; -webkit-text-stroke:1px rgba(28,25,23,0.06); white-space:nowrap; pointer-events:none; user-select:none; }
+    .hero-eyebrow { font-size:0.75rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--accent); margin-bottom:1.2rem; opacity:0; animation:rise 0.7s ease forwards 0.3s; }
+    .hero-heading { font-family:'Playfair Display',serif; font-size:clamp(3rem,9vw,7.5rem); font-weight:700; line-height:0.95; letter-spacing:-0.03em; color:var(--ink); opacity:0; animation:rise 0.7s ease forwards 0.5s; }
+    .hero-heading em { font-style:italic; color:var(--accent); }
+    .hero-sub { margin-top:2rem; max-width:520px; font-size:1rem; color:var(--ink2); line-height:1.75; opacity:0; animation:rise 0.7s ease forwards 0.7s; }
+    .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; opacity:0; animation:rise 0.7s ease forwards 0.9s; }
+    .btn { display:inline-flex; align-items:center; gap:0.5rem; padding:0.75rem 1.6rem; font-family:'Space Grotesk',sans-serif; font-size:0.82rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; border-radius:var(--radius); transition:all 0.2s; cursor:pointer; border:none; }
+    .btn-primary { background:var(--ink); color:var(--bg); }
+    .btn-primary:hover { background:var(--accent); }
+    .btn-outline { background:transparent; color:var(--ink); border:1.5px solid var(--line); }
+    .btn-outline:hover { border-color:var(--ink); background:var(--bg2); }
+    .hero-scroll-hint { position:absolute; bottom:2.5rem; right:5vw; font-size:0.7rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--ink3); writing-mode:vertical-rl; opacity:0; animation:rise 0.7s ease forwards 1.2s; }
+
+    .section { padding:7rem 5vw; max-width:1200px; margin:0 auto; }
+    .section-full { padding:7rem 5vw; }
+    .section-inner { max-width:1200px; margin:0 auto; }
+    .label { font-size:0.7rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:0.6rem; }
+    .heading { font-family:'Playfair Display',serif; font-size:clamp(2rem,5vw,3.5rem); font-weight:700; line-height:1.1; letter-spacing:-0.02em; color:var(--ink); margin-bottom:3.5rem; }
+    .heading em { font-style:italic; color:var(--accent); }
+
+    .sobre-grid { display:grid; grid-template-columns:1.2fr 0.8fr; gap:6rem; align-items:start; }
+    .sobre-text p { font-size:1.05rem; color:var(--ink2); margin-bottom:1.2rem; line-height:1.8; }
+    .sobre-text p strong { color:var(--ink); }
+    .sobre-aside { border-left:2px solid var(--line); padding-left:2.5rem; }
+    .aside-block { margin-bottom:2.5rem; }
+    .aside-title { font-size:0.68rem; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink3); margin-bottom:0.8rem; }
+    .aside-item { font-size:0.9rem; color:var(--ink2); padding:0.3rem 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:1rem; }
+    .aside-item span { color:var(--ink3); font-size:0.8rem; }
+
+    #projetos { background:var(--bg2); }
+    .proj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:1.5px; border:1.5px solid var(--line); }
+    .proj-card { background:var(--card); padding:2rem 2rem 2.5rem; transition:all 0.25s; position:relative; overflow:hidden; }
+    .proj-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),#e67e22); transform:scaleX(0); transform-origin:left; transition:transform 0.3s ease; }
+    .proj-card:hover { box-shadow:0 12px 40px rgba(0,0,0,0.1); transform:translateY(-2px); }
+    .proj-card:hover::before { transform:scaleX(1); }
+    .proj-number { font-size:0.65rem; font-weight:600; letter-spacing:0.15em; color:var(--ink3); margin-bottom:1rem; }
+    .proj-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:var(--ink); margin-bottom:0.6rem; line-height:1.25; }
+    .proj-origin { font-size:0.78rem; color:var(--accent); font-weight:500; margin-bottom:1rem; }
+    .proj-desc { font-size:0.88rem; color:var(--ink2); line-height:1.75; }
+    .proj-tags { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1.4rem; }
+    .tag { font-size:0.65rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; padding:0.25rem 0.6rem; border:1px solid var(--line); border-radius:2px; color:var(--ink3); background:var(--bg); }
+
+    .exp-list { max-width:780px; }
+    .exp-item { display:grid; grid-template-columns:140px 1fr; gap:2rem; padding:2rem 0; border-bottom:1px solid var(--line); }
+    .exp-item:last-child { border-bottom:none; }
+    .exp-org { font-size:0.75rem; font-weight:600; color:var(--ink3); padding-top:0.15rem; line-height:1.5; }
+    .exp-role { font-size:1.05rem; font-weight:600; color:var(--ink); margin-bottom:0.5rem; }
+    .exp-desc { font-size:0.88rem; color:var(--ink2); line-height:1.75; }
+
+    #habilidades { background:var(--bg2); }
+    .skills-layout { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .skill-block { background:var(--card); padding:1.8rem; border:1px solid var(--line); border-radius:var(--radius); }
+    .skill-block-title { font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem; }
+    .skill-list { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .skill-pill { font-size:0.82rem; font-weight:500; color:var(--ink2); background:var(--bg); padding:0.35rem 0.85rem; border-radius:100px; border:1px solid var(--line); }
+
+    .edu-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1rem; }
+    .edu-card { padding:1.6rem; border:1px solid var(--line); border-radius:var(--radius); background:var(--card); transition:border-color 0.2s; }
+    .edu-card:hover { border-color:var(--accent); }
+    .edu-degree { font-size:0.92rem; font-weight:600; color:var(--ink); margin-bottom:0.35rem; line-height:1.4; }
+    .edu-inst { font-size:0.78rem; color:var(--ink3); }
+
+    #contato { background:var(--ink); color:var(--bg); }
+    #contato .heading { color:var(--bg); }
+    #contato .label { color:#e67e22; }
+    .contato-grid { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; }
+    .contato-text p { font-size:1rem; color:rgba(244,241,235,0.65); line-height:1.8; margin-bottom:1rem; }
+    .contato-links { display:flex; flex-direction:column; gap:0.8rem; }
+    .contato-link { display:flex; align-items:center; gap:1rem; padding:1rem 1.2rem; border:1px solid rgba(244,241,235,0.12); border-radius:var(--radius); text-decoration:none; transition:all 0.2s; }
+    .contato-link:hover { background:rgba(244,241,235,0.06); border-color:rgba(244,241,235,0.3); }
+    .contato-link-label { font-size:0.65rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:rgba(244,241,235,0.4); display:block; margin-bottom:0.15rem; }
+    .contato-link-value { font-size:0.9rem; font-weight:500; color:var(--bg); }
+
+    footer { background:var(--ink); border-top:1px solid rgba(244,241,235,0.08); padding:2rem 5vw; display:flex; justify-content:space-between; align-items:center; font-size:0.75rem; color:rgba(244,241,235,0.3); letter-spacing:0.05em; }
+
+    @keyframes rise { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease,transform 0.65s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:900px) { .sobre-grid { grid-template-columns:1fr; gap:3rem; } .sobre-aside { border-left:none; border-top:2px solid var(--line); padding-left:0; padding-top:2rem; } .contato-grid { grid-template-columns:1fr; gap:3rem; } .skills-layout { grid-template-columns:1fr; } .exp-item { grid-template-columns:1fr; gap:0.5rem; } .nav-right { gap:1rem; } }
+    @media (max-width:600px) { .nav-links { display:none; } .proj-grid { grid-template-columns:1fr; } .hero-heading { font-size:3rem; } }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#hero" class="nav-name">Gabriel Piske</a>
-  <ul class="nav-links">
-    <li><a href="#sobre">Sobre</a></li>
-    <li><a href="#projetos">Projetos</a></li>
-    <li><a href="#experiencia">Experiência</a></li>
-    <li><a href="#habilidades">Skills</a></li>
-    <li><a href="#formacao">Formação</a></li>
-    <li><a href="#contato">Contato</a></li>
-  </ul>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#sobre" data-pt="Sobre" data-en="About">Sobre</a></li>
+      <li><a href="#projetos" data-pt="Projetos" data-en="Projects">Projetos</a></li>
+      <li><a href="#experiencia" data-pt="Experiência" data-en="Experience">Experiência</a></li>
+      <li><a href="#habilidades" data-pt="Skills" data-en="Skills">Skills</a></li>
+      <li><a href="#formacao" data-pt="Formação" data-en="Education">Formação</a></li>
+      <li><a href="#contato" data-pt="Contato" data-en="Contact">Contato</a></li>
+    </ul>
+    <button class="lang-btn" id="langToggle" onclick="toggleLang()"><span class="flag">🇺🇸</span> EN</button>
+  </div>
 </nav>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-bg-text" aria-hidden="true">GP</div>
-  <p class="hero-eyebrow">Brasília, DF &mdash; Engenharia de Software</p>
+  <p class="hero-eyebrow" data-pt="Brasília, DF — Engenharia de Software" data-en="Brasília, DF — Software Engineering">Brasília, DF — Engenharia de Software</p>
   <h1 class="hero-heading">Gabriel<br/><em>Piske</em></h1>
-  <p class="hero-sub">
-    Construo coisas que me interessam — software, hardware, próteses, turbinas,
-    drones, computadores feitos com peças recicladas.
-    Estudante de Engenharia de Software na UnB. Medalhista OBT (MIT &amp; ITA).
-  </p>
+  <p class="hero-sub" data-pt="Construo coisas que me interessam — software, hardware, próteses, turbinas, drones e, às vezes, computadores feitos do zero com peças do lixo. Estudante de Engenharia de Software na UnB. Medalhista OBT (MIT &amp; ITA)." data-en="I build things that interest me — software, hardware, prosthetics, turbines, drones and, sometimes, computers assembled from scratch using discarded parts. Software Engineering student at UnB. OBT medal winner (MIT &amp; ITA).">Construo coisas que me interessam — software, hardware, próteses, turbinas, drones e, às vezes, computadores feitos do zero com peças do lixo. Estudante de Engenharia de Software na UnB. Medalhista OBT (MIT &amp; ITA).</p>
   <div class="hero-actions">
-    <a href="curriculo_gabriel.pdf" download class="btn btn-primary">
-      ↓ Baixar Currículo
-    </a>
-    <a href="#projetos" class="btn btn-outline">Ver projetos</a>
+    <a href="curriculo_gabriel.pdf" download class="btn btn-primary" id="btnDownload" data-pt="↓ Baixar Currículo" data-en="↓ Download Resume">↓ Baixar Currículo</a>
+    <a href="#projetos" class="btn btn-outline" data-pt="Ver projetos" data-en="View projects">Ver projetos</a>
   </div>
   <span class="hero-scroll-hint">scroll</span>
 </section>
 
-<!-- SOBRE -->
 <section id="sobre" class="section">
-  <p class="label reveal">Quem sou</p>
-  <h2 class="heading reveal">Um pouco<br/><em>sobre mim</em></h2>
-
+  <p class="label reveal" data-pt="Quem sou" data-en="Who I am">Quem sou</p>
+  <h2 class="heading reveal" data-pt="Um pouco &lt;em&gt;sobre mim&lt;/em&gt;" data-en="A little &lt;em&gt;about me&lt;/em&gt;">Um pouco <em>sobre mim</em></h2>
   <div class="sobre-grid">
     <div class="sobre-text reveal">
-      <p>
-        Sou de Brasília, estudo Engenharia de Software na UnB e tenho uma relação muito direta com a ideia de
-        <strong>construir coisas do zero</strong>. Turbina eólica sustentável, prótese de braço com sensores,
-        computador montado a partir de peças recicladas.
-      </p>
-      <p>
-        Meu interesse maior está em <strong>backend e hardware</strong>: adoro quando software e eletrônica
-        se encontram. Trabalho com C/C++, Arduino, sistemas embarcados e tenho noções de cibersegurança
-        (TryHackMe, Kali Linux). Também sei trabalhar com HTML, CSS, terminal Linux e PowerShell.
-      </p>
-      <p>
-        Fora da engenharia, dou aulas de xadrez, já palestrei sobre energia eólica e indução eletromagnética,
-        conduzi monitorias de Relatividade Geral e estou escrevendo um livro chamado
-        <strong>"A Singularidade do Cosmos"</strong> — sobre astronomia, astronáutica e física avançada.
-      </p>
-      <p>Inglês fluente. Alemão básico.</p>
+      <p data-pt="Sou de Brasília, estudo Engenharia de Software na UnB e tenho uma relação muito direta com a ideia de &lt;strong&gt;construir coisas do zero&lt;/strong&gt;. Turbina eólica sustentável, prótese de braço com sensores, computador montado a partir de peças recicladas — todos projetos que fiz porque quis entender como funcionam, não porque alguém mandou." data-en="I'm from Brasília, studying Software Engineering at UnB, and I have a very direct relationship with the idea of &lt;strong&gt;building things from scratch&lt;/strong&gt;. A sustainable wind turbine, a sensor-based arm prosthetic, a computer built from recycled parts — all projects I did because I wanted to understand how they work, not because someone told me to.">Sou de Brasília, estudo Engenharia de Software na UnB e tenho uma relação muito direta com a ideia de <strong>construir coisas do zero</strong>. Turbina eólica sustentável, prótese de braço com sensores, computador montado a partir de peças recicladas — todos projetos que fiz porque quis entender como funcionam, não porque alguém mandou.</p>
+      <p data-pt="Meu interesse maior está em &lt;strong&gt;backend e hardware&lt;/strong&gt;: adoro quando software e eletrônica se encontram. Trabalho com C/C++, Arduino, sistemas embarcados e tenho noções de cibersegurança (TryHackMe, Kali Linux). Também sei me virar com HTML, CSS, terminal Linux e PowerShell." data-en="My main interest lies in &lt;strong&gt;backend and hardware&lt;/strong&gt;: I love when software and electronics meet. I work with C/C++, Arduino, embedded systems, and have knowledge of cybersecurity (TryHackMe, Kali Linux). I'm also comfortable with HTML, CSS, Linux terminal and PowerShell.">Meu interesse maior está em <strong>backend e hardware</strong>: adoro quando software e eletrônica se encontram. Trabalho com C/C++, Arduino, sistemas embarcados e tenho noções de cibersegurança (TryHackMe, Kali Linux). Também sei me virar com HTML, CSS, terminal Linux e PowerShell.</p>
+      <p data-pt="Fora da engenharia, dou aulas de xadrez, já palestrei sobre energia eólica e indução eletromagnética, conduzi monitorias de Relatividade Geral e estou escrevendo um livro chamado &lt;strong&gt;\"A Singularidade do Cosmos\"&lt;/strong&gt; — sobre astronomia, astronáutica e física avançada." data-en="Outside engineering, I teach chess, have given talks on wind energy and electromagnetic induction, led General Relativity study sessions, and I'm writing a book called &lt;strong&gt;\"The Singularity of the Cosmos\"&lt;/strong&gt; — on astronomy, astronautics and advanced physics.">Fora da engenharia, dou aulas de xadrez, já palestrei sobre energia eólica e indução eletromagnética, conduzi monitorias de Relatividade Geral e estou escrevendo um livro chamado <strong>"A Singularidade do Cosmos"</strong> — sobre astronomia, astronáutica e física avançada.</p>
+      <p data-pt="&lt;strong&gt;Inglês fluente&lt;/strong&gt; | Alemão em desenvolvimento." data-en="&lt;strong&gt;Fluent English&lt;/strong&gt; | German in progress."><strong>Inglês fluente</strong> | Alemão em desenvolvimento.</p>
     </div>
-
     <div class="sobre-aside reveal">
       <div class="aside-block">
-        <p class="aside-title">Certificações em destaque</p>
+        <p class="aside-title" data-pt="Certificações em destaque" data-en="Top certifications">Certificações em destaque</p>
         <div class="aside-item">Medalha OBT <span>MIT &amp; ITA</span></div>
-        <div class="aside-item">Medalha Canguru <span>Matemática</span></div>
-        <div class="aside-item">Propulsores de Foguetes <span>UnB</span></div>
+        <div class="aside-item" data-pt="Medalha Canguru &lt;span&gt;Matemática&lt;/span&gt;" data-en="Kangaroo Medal &lt;span&gt;Mathematics&lt;/span&gt;">Medalha Canguru <span>Matemática</span></div>
+        <div class="aside-item" data-pt="Propulsores de Foguetes &lt;span&gt;UnB&lt;/span&gt;" data-en="Rocket Propulsion &lt;span&gt;UnB&lt;/span&gt;">Propulsores de Foguetes <span>UnB</span></div>
         <div class="aside-item">Excel &amp; Word <span>Sebrae</span></div>
       </div>
       <div class="aside-block">
-        <p class="aside-title">Idiomas</p>
-        <div class="aside-item">Português <span>Nativo</span></div>
-        <div class="aside-item">Inglês <span>Fluente</span></div>
-        <div class="aside-item">Alemão <span>Básico</span></div>
+        <p class="aside-title" data-pt="Idiomas" data-en="Languages">Idiomas</p>
+        <div class="aside-item" data-pt="Português &lt;span&gt;Nativo&lt;/span&gt;" data-en="Portuguese &lt;span&gt;Native&lt;/span&gt;">Português <span>Nativo</span></div>
+        <div class="aside-item" data-pt="Inglês &lt;span&gt;Fluente&lt;/span&gt;" data-en="English &lt;span&gt;Fluent&lt;/span&gt;">Inglês <span>Fluente</span></div>
+        <div class="aside-item" data-pt="Alemão &lt;span&gt;Básico&lt;/span&gt;" data-en="German &lt;span&gt;Beginner&lt;/span&gt;">Alemão <span>Básico</span></div>
       </div>
       <div class="aside-block">
-        <p class="aside-title">Formação</p>
-        <div class="aside-item">Eng. de Software <span>UnB — em curso</span></div>
+        <p class="aside-title" data-pt="Formação" data-en="Education">Formação</p>
+        <div class="aside-item" data-pt="Eng. de Software &lt;span&gt;UnB — em curso&lt;/span&gt;" data-en="Software Eng. &lt;span&gt;UnB — ongoing&lt;/span&gt;">Eng. de Software <span>UnB — em curso</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- PROJETOS -->
 <div id="projetos" class="section-full">
   <div class="section-inner">
-    <p class="label reveal">O que já fiz</p>
-    <h2 class="heading reveal">Projetos de<br/><em>destaque</em></h2>
+    <p class="label reveal" data-pt="O que já fiz" data-en="What I've built">O que já fiz</p>
+    <h2 class="heading reveal" data-pt="Projetos de &lt;em&gt;destaque&lt;/em&gt;" data-en="&lt;em&gt;Featured&lt;/em&gt; projects">Projetos de <em>destaque</em></h2>
   </div>
   <div class="proj-grid">
-
     <div class="proj-card reveal">
       <p class="proj-number">01</p>
-      <h3 class="proj-title">Drone — COP 30</h3>
-      <p class="proj-origin">Projeto em grupo &middot; Prof. Gilamara Isabel</p>
-      <p class="proj-desc">Design e desenvolvimento de um drone em equipe, vinculado à COP 30. Envolveu engenharia aeronáutica, eletrônica embarcada e discussão sobre sustentabilidade aplicada à tecnologia.</p>
-      <div class="proj-tags">
-        <span class="tag">Hardware</span>
-        <span class="tag">Embarcados</span>
-        <span class="tag">Grupo</span>
-      </div>
+      <h3 class="proj-title" data-pt="Drone — COP 30" data-en="Drone — COP 30">Drone — COP 30</h3>
+      <p class="proj-origin" data-pt="Projeto em grupo · Prof. Gilamara Isabel" data-en="Group project · Prof. Gilamara Isabel">Projeto em grupo · Prof. Gilamara Isabel</p>
+      <p class="proj-desc" data-pt="Design e desenvolvimento de um drone em equipe, vinculado à COP 30. Envolveu engenharia aeronáutica, eletrônica embarcada e sustentabilidade aplicada à tecnologia." data-en="Design and development of a drone as part of a team project linked to COP 30. Involved aeronautical engineering, embedded electronics and sustainability applied to technology.">Design e desenvolvimento de um drone em equipe, vinculado à COP 30. Envolveu engenharia aeronáutica, eletrônica embarcada e sustentabilidade aplicada à tecnologia.</p>
+      <div class="proj-tags"><span class="tag">Hardware</span><span class="tag">Embedded</span><span class="tag">Team</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">02</p>
-      <h3 class="proj-title">Ruby — Coleta Seletiva</h3>
-      <p class="proj-origin">OBT Medalha (MIT &amp; ITA) &middot; Figma</p>
-      <p class="proj-desc">Aplicativo desenvolvido em grupo no Figma para tornar a coleta seletiva sustentável mais acessível à população. O projeto conquistou medalha na Olimpíada Brasileira de Tecnologia, certificada pelo MIT e ITA.</p>
-      <div class="proj-tags">
-        <span class="tag">UX/UI</span>
-        <span class="tag">Figma</span>
-        <span class="tag">Sustentabilidade</span>
-        <span class="tag">OBT</span>
-      </div>
+      <h3 class="proj-title" data-pt="Ruby — Coleta Seletiva" data-en="Ruby — Selective Waste Collection">Ruby — Coleta Seletiva</h3>
+      <p class="proj-origin">OBT Medal (MIT &amp; ITA) · Figma</p>
+      <p class="proj-desc" data-pt="Aplicativo desenvolvido em grupo no Figma para tornar a coleta seletiva sustentável mais acessível. Conquistou medalha na Olimpíada Brasileira de Tecnologia, certificada pelo MIT e ITA." data-en="App co-developed in Figma to make sustainable selective waste collection more accessible. Won a medal at the Brazilian Technology Olympiad, certified by MIT and ITA.">Aplicativo desenvolvido em grupo no Figma para tornar a coleta seletiva sustentável mais acessível. Conquistou medalha na Olimpíada Brasileira de Tecnologia, certificada pelo MIT e ITA.</p>
+      <div class="proj-tags"><span class="tag">UX/UI</span><span class="tag">Figma</span><span class="tag">OBT</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">03</p>
-      <h3 class="proj-title">Prótese de Braço Biomecânica</h3>
-      <p class="proj-origin">Projeto individual &middot; Colégio Marista</p>
-      <p class="proj-desc">Prótese com sensores que mimetizavam os movimentos do membro original. Desenvolvi sozinho, integrando eletrônica embarcada, programação de microcontroladores e mecânica estrutural.</p>
-      <div class="proj-tags">
-        <span class="tag">Arduino</span>
-        <span class="tag">Sensores</span>
-        <span class="tag">Biomecânica</span>
-      </div>
+      <h3 class="proj-title" data-pt="Prótese de Braço Biomecânica" data-en="Biomechanical Arm Prosthetic">Prótese de Braço Biomecânica</h3>
+      <p class="proj-origin" data-pt="Projeto individual · Colégio Marista" data-en="Independent project · Colégio Marista">Projeto individual · Colégio Marista</p>
+      <p class="proj-desc" data-pt="Prótese com sensores que mimetizavam os movimentos do membro original. Desenvolvi sozinho, integrando eletrônica embarcada, programação de microcontroladores e mecânica estrutural." data-en="Prosthetic with sensors that mimicked the movements of the original limb. Built independently, integrating embedded electronics, microcontroller programming and structural mechanics.">Prótese com sensores que mimetizavam os movimentos do membro original. Desenvolvi sozinho, integrando eletrônica embarcada, programação de microcontroladores e mecânica estrutural.</p>
+      <div class="proj-tags"><span class="tag">Arduino</span><span class="tag">Sensors</span><span class="tag">Biomechanics</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">04</p>
-      <h3 class="proj-title">Turbina Eólica Sustentável</h3>
-      <p class="proj-origin">Projeto individual &middot; Colégio Marista</p>
-      <p class="proj-desc">Projetei e construí sozinho uma turbina eólica parcialmente biodegradável, explorando materiais sustentáveis, aerodinâmica e princípios de geração de energia.</p>
-      <div class="proj-tags">
-        <span class="tag">Engenharia</span>
-        <span class="tag">Sustentabilidade</span>
-        <span class="tag">Energia</span>
-      </div>
+      <h3 class="proj-title" data-pt="Turbina Eólica Sustentável" data-en="Sustainable Wind Turbine">Turbina Eólica Sustentável</h3>
+      <p class="proj-origin" data-pt="Projeto individual · Colégio Marista" data-en="Independent project · Colégio Marista">Projeto individual · Colégio Marista</p>
+      <p class="proj-desc" data-pt="Projetei e construí sozinho uma turbina eólica parcialmente biodegradável, explorando materiais sustentáveis, aerodinâmica e princípios de geração de energia." data-en="Designed and built a partially biodegradable wind turbine from scratch, exploring sustainable materials, aerodynamics and energy generation principles.">Projetei e construí sozinho uma turbina eólica parcialmente biodegradável, explorando materiais sustentáveis, aerodinâmica e princípios de geração de energia.</p>
+      <div class="proj-tags"><span class="tag">Engineering</span><span class="tag">Sustainability</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">05</p>
-      <h3 class="proj-title">Computador de Peças Recicladas</h3>
-      <p class="proj-origin">Projeto pessoal</p>
-      <p class="proj-desc">Montei um computador funcional usando exclusivamente componentes descartados. O exercício forçou um entendimento muito concreto de arquitetura de hardware, compatibilidade e diagnóstico de componentes.</p>
-      <div class="proj-tags">
-        <span class="tag">Hardware</span>
-        <span class="tag">Reciclagem</span>
-        <span class="tag">Arquitetura</span>
-      </div>
+      <h3 class="proj-title" data-pt="Computador de Peças Recicladas" data-en="Computer from Recycled Parts">Computador de Peças Recicladas</h3>
+      <p class="proj-origin" data-pt="Projeto pessoal" data-en="Personal project">Projeto pessoal</p>
+      <p class="proj-desc" data-pt="Montei um computador funcional usando exclusivamente componentes descartados. O exercício exigiu entendimento concreto de arquitetura de hardware, compatibilidade e diagnóstico de componentes." data-en="Assembled a fully functional computer using exclusively discarded components. Required solid knowledge of hardware architecture, compatibility and component diagnostics.">Montei um computador funcional usando exclusivamente componentes descartados. O exercício exigiu entendimento concreto de arquitetura de hardware, compatibilidade e diagnóstico de componentes.</p>
+      <div class="proj-tags"><span class="tag">Hardware</span><span class="tag">Recycling</span><span class="tag">Architecture</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">06</p>
       <h3 class="proj-title">Jammer ESP32</h3>
-      <p class="proj-origin">Projeto de hardware pessoal</p>
-      <p class="proj-desc">Desenvolvimento de um jammer com microcontrolador ESP32, dentro dos limites legais. Aprofundou meu entendimento de radiofrequência, comunicação sem fio e cibersegurança aplicada a hardware.</p>
-      <div class="proj-tags">
-        <span class="tag">ESP32</span>
-        <span class="tag">RF</span>
-        <span class="tag">Cibersegurança</span>
-      </div>
+      <p class="proj-origin" data-pt="Projeto de hardware pessoal" data-en="Personal hardware project">Projeto de hardware pessoal</p>
+      <p class="proj-desc" data-pt="Desenvolvimento de um jammer com ESP32, dentro dos limites legais. Aprofundou meu entendimento de radiofrequência, comunicação sem fio e cibersegurança aplicada a hardware." data-en="Built a jammer using an ESP32 microcontroller, within legal limits. Deepened understanding of radio frequency, wireless communication and hardware-level cybersecurity.">Desenvolvimento de um jammer com ESP32, dentro dos limites legais. Aprofundou meu entendimento de radiofrequência, comunicação sem fio e cibersegurança aplicada a hardware.</p>
+      <div class="proj-tags"><span class="tag">ESP32</span><span class="tag">RF</span><span class="tag">Cybersecurity</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">07</p>
-      <h3 class="proj-title">Impressão 3D e Prototipagem</h3>
-      <p class="proj-origin">Projetos variados</p>
-      <p class="proj-desc">Experiência prática com modelagem e impressão 3D aplicada a protótipos de engenharia. Uso como ferramenta de iteração rápida em projetos de hardware.</p>
-      <div class="proj-tags">
-        <span class="tag">Impressão 3D</span>
-        <span class="tag">Prototipagem</span>
-      </div>
+      <h3 class="proj-title" data-pt="Impressão 3D e Prototipagem" data-en="3D Printing and Prototyping">Impressão 3D e Prototipagem</h3>
+      <p class="proj-origin" data-pt="Projetos variados" data-en="Various projects">Projetos variados</p>
+      <p class="proj-desc" data-pt="Experiência prática com modelagem e impressão 3D aplicada a protótipos de engenharia. Uso como ferramenta de iteração rápida em projetos de hardware." data-en="Hands-on experience with 3D modeling and printing applied to engineering prototypes. Used as a rapid iteration tool in hardware projects.">Experiência prática com modelagem e impressão 3D aplicada a protótipos de engenharia. Uso como ferramenta de iteração rápida em projetos de hardware.</p>
+      <div class="proj-tags"><span class="tag">3D Printing</span><span class="tag">Prototyping</span></div>
     </div>
-
     <div class="proj-card reveal">
       <p class="proj-number">08</p>
-      <h3 class="proj-title">A Singularidade do Cosmos</h3>
-      <p class="proj-origin">Livro autoral &middot; em escrita &middot; sem previsão de publicação</p>
-      <p class="proj-desc">Estou escrevendo um livro sobre astronomia, astronáutica e física avançada. É um projeto pessoal de longo prazo que me obriga a dominar o que escrevo — não existe atalho para explicar relatividade ou mecânica orbital de forma honesta.</p>
-      <div class="proj-tags">
-        <span class="tag">Astronomia</span>
-        <span class="tag">Física</span>
-        <span class="tag">Escrita</span>
-      </div>
+      <h3 class="proj-title" data-pt="A Singularidade do Cosmos" data-en="The Singularity of the Cosmos">A Singularidade do Cosmos</h3>
+      <p class="proj-origin" data-pt="Livro autoral · em escrita · sem previsão de publicação" data-en="Original book · in progress · no set publication date">Livro autoral · em escrita · sem previsão de publicação</p>
+      <p class="proj-desc" data-pt="Estou escrevendo um livro sobre astronomia, astronáutica e física avançada. Um projeto de longo prazo que me obriga a dominar o que escrevo — não existe atalho para explicar relatividade ou mecânica orbital de forma honesta." data-en="Writing a book on astronomy, astronautics and advanced physics. A long-term project that forces me to truly master what I write — there are no shortcuts for explaining relativity or orbital mechanics honestly.">Estou escrevendo um livro sobre astronomia, astronáutica e física avançada. Um projeto de longo prazo que me obriga a dominar o que escrevo — não existe atalho para explicar relatividade ou mecânica orbital de forma honesta.</p>
+      <div class="proj-tags"><span class="tag">Astronomy</span><span class="tag">Physics</span><span class="tag">Writing</span></div>
     </div>
-
   </div>
 </div>
 
-<!-- EXPERIÊNCIA -->
 <section id="experiencia" class="section">
-  <p class="label reveal">Trajetória</p>
-  <h2 class="heading reveal"><em>Experiências</em></h2>
-
+  <p class="label reveal" data-pt="Trajetória" data-en="Background">Trajetória</p>
+  <h2 class="heading reveal" data-pt="&lt;em&gt;Experiências&lt;/em&gt;" data-en="&lt;em&gt;Experience&lt;/em&gt;"><em>Experiências</em></h2>
   <div class="exp-list">
-
     <div class="exp-item reveal">
-      <div class="exp-org">Los Manos Burguer<br/>iFood · Brasília, DF</div>
+      <div class="exp-org" data-pt="Los Manos Burguer&lt;br/&gt;iFood · Brasília, DF" data-en="Los Manos Burguer&lt;br/&gt;iFood · Brasília, DF">Los Manos Burguer<br/>iFood · Brasília, DF</div>
       <div>
-        <p class="exp-role">Fundador e Administrador</p>
-        <p class="exp-desc">Criei e operei um negócio gastronômico com atuação via iFood. Cuidei de tudo — cardápio, precificação, gestão financeira, logística e atendimento. Aprendi que administrar um negócio pequeno exige mais disciplina do que qualquer outra coisa.</p>
+        <p class="exp-role" data-pt="Fundador e Administrador" data-en="Founder and Administrator">Fundador e Administrador</p>
+        <p class="exp-desc" data-pt="Criei e operei um negócio gastronômico com atuação via iFood. Cuidei de tudo — cardápio, precificação, gestão financeira, logística e atendimento. Aprendi que administrar um negócio pequeno exige mais disciplina do que qualquer outra coisa." data-en="Created and operated a food business through iFood. Handled everything — menu, pricing, financial management, logistics and customer service. Learned that running a small business demands more discipline than almost anything else.">Criei e operei um negócio gastronômico com atuação via iFood. Cuidei de tudo — cardápio, precificação, gestão financeira, logística e atendimento. Aprendi que administrar um negócio pequeno exige mais disciplina do que qualquer outra coisa.</p>
       </div>
     </div>
-
     <div class="exp-item reveal">
-      <div class="exp-org">Autônomo<br/>Brasília, DF</div>
+      <div class="exp-org" data-pt="Autônomo&lt;br/&gt;Brasília, DF" data-en="Freelance&lt;br/&gt;Brasília, DF">Autônomo<br/>Brasília, DF</div>
       <div>
-        <p class="exp-role">Professor Particular</p>
-        <p class="exp-desc">Aulas individuais de Matemática, Física, Química e História. Aprendi que ensinar bem exige entender o aluno antes de entender o conteúdo. Desenvolvi material didático personalizado para cada perfil.</p>
+        <p class="exp-role" data-pt="Professor Particular" data-en="Private Tutor">Professor Particular</p>
+        <p class="exp-desc" data-pt="Aulas individuais de Matemática, Física, Química e História. Aprendi que ensinar bem exige entender o aluno antes de entender o conteúdo. Desenvolvi material didático personalizado para cada perfil." data-en="One-on-one tutoring in Mathematics, Physics, Chemistry and History. Learned that teaching well means understanding the student before the subject. Developed personalized study materials for each profile.">Aulas individuais de Matemática, Física, Química e História. Aprendi que ensinar bem exige entender o aluno antes de entender o conteúdo. Desenvolvi material didático personalizado para cada perfil.</p>
       </div>
     </div>
-
     <div class="exp-item reveal">
       <div class="exp-org">Col. Marista Champagnat<br/>Brasília, DF</div>
       <div>
-        <p class="exp-role">Professor de Xadrez — Básico ao Avançado</p>
-        <p class="exp-desc">Ministrei aulas de xadrez para alunos de todos os níveis. O xadrez é uma das melhores ferramentas para desenvolver raciocínio antecipativo e tolerância à derrota — duas coisas que fazem falta em qualquer área.</p>
+        <p class="exp-role" data-pt="Professor de Xadrez — Básico ao Avançado" data-en="Chess Instructor — Beginner to Advanced">Professor de Xadrez — Básico ao Avançado</p>
+        <p class="exp-desc" data-pt="Ministrei aulas de xadrez para alunos de todos os níveis. O xadrez é uma das melhores ferramentas para desenvolver raciocínio antecipativo e tolerância à derrota — duas coisas que fazem falta em qualquer área." data-en="Taught chess to students of all skill levels. Chess is one of the best tools for developing anticipatory thinking and resilience — two things that matter in every field.">Ministrei aulas de xadrez para alunos de todos os níveis. O xadrez é uma das melhores ferramentas para desenvolver raciocínio antecipativo e tolerância à derrota — duas coisas que fazem falta em qualquer área.</p>
       </div>
     </div>
-
     <div class="exp-item reveal">
       <div class="exp-org">Colégio Marista<br/>Brasília, DF</div>
       <div>
-        <p class="exp-role">Palestrante — Energia Eólica e Indução Eletromagnética</p>
-        <p class="exp-desc">Palestras sobre energia eólica e indução eletromagnética para alunos do colégio. Comunicar física de forma que faça sentido sem simplificar demais é um desafio que ainda me interessa muito.</p>
+        <p class="exp-role" data-pt="Palestrante — Energia Eólica e Indução Eletromagnética" data-en="Speaker — Wind Energy and Electromagnetic Induction">Palestrante — Energia Eólica e Indução Eletromagnética</p>
+        <p class="exp-desc" data-pt="Palestras sobre energia eólica e indução eletromagnética para alunos do colégio. Comunicar física de forma que faça sentido sem simplificar demais é um desafio que ainda me interessa muito." data-en="Talks on wind energy and electromagnetic induction for high school students. Communicating physics in a way that makes sense without oversimplifying is a challenge I still find deeply interesting.">Palestras sobre energia eólica e indução eletromagnética para alunos do colégio. Comunicar física de forma que faça sentido sem simplificar demais é um desafio que ainda me interessa muito.</p>
       </div>
     </div>
-
     <div class="exp-item reveal">
       <div class="exp-org">Colégio Marista<br/>Brasília, DF</div>
       <div>
-        <p class="exp-role">Monitor de Relatividade Geral</p>
-        <p class="exp-desc">Conduzi monitorias sobre Relatividade Geral para colegas. É um dos temas mais difíceis de explicar bem — e justamente por isso um dos mais satisfatórios quando o entendimento acontece.</p>
+        <p class="exp-role" data-pt="Monitor de Relatividade Geral" data-en="General Relativity Teaching Assistant">Monitor de Relatividade Geral</p>
+        <p class="exp-desc" data-pt="Conduzi monitorias sobre Relatividade Geral para colegas. É um dos temas mais difíceis de explicar bem — e justamente por isso um dos mais satisfatórios quando o entendimento acontece." data-en="Led General Relativity study sessions for fellow students. One of the hardest topics to explain well — and precisely for that reason, one of the most rewarding when understanding clicks.">Conduzi monitorias sobre Relatividade Geral para colegas. É um dos temas mais difíceis de explicar bem — e justamente por isso um dos mais satisfatórios quando o entendimento acontece.</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- HABILIDADES -->
 <div id="habilidades" class="section-full">
   <div class="section-inner">
-    <p class="label reveal">O que uso</p>
-    <h2 class="heading reveal">Habilidades<br/><em>técnicas</em></h2>
+    <p class="label reveal" data-pt="O que uso" data-en="What I use">O que uso</p>
+    <h2 class="heading reveal" data-pt="Habilidades &lt;em&gt;técnicas&lt;/em&gt;" data-en="Technical &lt;em&gt;skills&lt;/em&gt;">Habilidades <em>técnicas</em></h2>
     <div class="skills-layout">
-
       <div class="skill-block reveal">
-        <p class="skill-block-title">Linguagens</p>
-        <div class="skill-list">
-          <span class="skill-pill">C</span>
-          <span class="skill-pill">C++</span>
-          <span class="skill-pill">HTML</span>
-          <span class="skill-pill">CSS</span>
-        </div>
+        <p class="skill-block-title" data-pt="Linguagens" data-en="Languages">Linguagens</p>
+        <div class="skill-list"><span class="skill-pill">C</span><span class="skill-pill">C++</span><span class="skill-pill">HTML</span><span class="skill-pill">CSS</span></div>
       </div>
-
       <div class="skill-block reveal">
-        <p class="skill-block-title">Hardware & Embarcados</p>
-        <div class="skill-list">
-          <span class="skill-pill">Arduino</span>
-          <span class="skill-pill">ESP32</span>
-          <span class="skill-pill">Impressão 3D</span>
-          <span class="skill-pill">Prototipagem</span>
-          <span class="skill-pill">Sistemas Embarcados</span>
-        </div>
+        <p class="skill-block-title" data-pt="Hardware &amp; Embarcados" data-en="Hardware &amp; Embedded">Hardware &amp; Embarcados</p>
+        <div class="skill-list"><span class="skill-pill">Arduino</span><span class="skill-pill">ESP32</span><span class="skill-pill" data-pt="Impressão 3D" data-en="3D Printing">Impressão 3D</span><span class="skill-pill" data-pt="Prototipagem" data-en="Prototyping">Prototipagem</span><span class="skill-pill" data-pt="Sistemas Embarcados" data-en="Embedded Systems">Sistemas Embarcados</span></div>
       </div>
-
       <div class="skill-block reveal">
-        <p class="skill-block-title">Ferramentas</p>
-        <div class="skill-list">
-          <span class="skill-pill">VS Code</span>
-          <span class="skill-pill">GitHub</span>
-          <span class="skill-pill">Linux</span>
-          <span class="skill-pill">PowerShell</span>
-          <span class="skill-pill">Figma</span>
-          <span class="skill-pill">Excel</span>
-          <span class="skill-pill">Word</span>
-        </div>
+        <p class="skill-block-title" data-pt="Ferramentas" data-en="Tools">Ferramentas</p>
+        <div class="skill-list"><span class="skill-pill">VS Code</span><span class="skill-pill">GitHub</span><span class="skill-pill">Linux</span><span class="skill-pill">PowerShell</span><span class="skill-pill">Figma</span><span class="skill-pill">Excel</span><span class="skill-pill">Word</span></div>
       </div>
-
       <div class="skill-block reveal">
-        <p class="skill-block-title">Cibersegurança</p>
-        <div class="skill-list">
-          <span class="skill-pill">TryHackMe</span>
-          <span class="skill-pill">Kali Linux</span>
-        </div>
+        <p class="skill-block-title" data-pt="Cibersegurança" data-en="Cybersecurity">Cibersegurança</p>
+        <div class="skill-list"><span class="skill-pill">TryHackMe</span><span class="skill-pill">Kali Linux</span></div>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- FORMAÇÃO -->
 <section id="formacao" class="section">
-  <p class="label reveal">Educação</p>
-  <h2 class="heading reveal">Formação e<br/><em>certificações</em></h2>
+  <p class="label reveal" data-pt="Educação" data-en="Education">Educação</p>
+  <h2 class="heading reveal" data-pt="Formação e &lt;em&gt;certificações&lt;/em&gt;" data-en="Education and &lt;em&gt;certifications&lt;/em&gt;">Formação e <em>certificações</em></h2>
   <div class="edu-grid">
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Bacharelado em Engenharia de Software — Em andamento</p>
-      <p class="edu-inst">Universidade de Brasília (UnB) · Brasília, DF</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Curso de Propulsores de Foguetes</p>
-      <p class="edu-inst">Universidade de Brasília (UnB)</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Medalha — Olimpíada Brasileira de Tecnologia (OBT)</p>
-      <p class="edu-inst">Certificada pelo MIT e ITA · App Ruby</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Medalha — Canguru de Matemática</p>
-      <p class="edu-inst">Competição Internacional de Matemática</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Excel — Curso Completo</p>
-      <p class="edu-inst">Sebrae</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Word — Curso Completo</p>
-      <p class="edu-inst">Sebrae</p>
-    </div>
-
-    <div class="edu-card reveal">
-      <p class="edu-degree">Outros certificados de olimpíadas</p>
-      <p class="edu-inst">Diversas competições científicas e tecnológicas nacionais</p>
-    </div>
-
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Bacharelado em Engenharia de Software — Em andamento" data-en="Bachelor's in Software Engineering — In Progress">Bacharelado em Engenharia de Software — Em andamento</p><p class="edu-inst" data-pt="Universidade de Brasília (UnB) · Brasília, DF" data-en="University of Brasília (UnB) · Brasília, DF">Universidade de Brasília (UnB) · Brasília, DF</p></div>
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Curso de Propulsores de Foguetes" data-en="Rocket Propulsion Course">Curso de Propulsores de Foguetes</p><p class="edu-inst" data-pt="Universidade de Brasília (UnB)" data-en="University of Brasília (UnB)">Universidade de Brasília (UnB)</p></div>
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Medalha — Olimpíada Brasileira de Tecnologia (OBT)" data-en="Medal — Brazilian Technology Olympiad (OBT)">Medalha — Olimpíada Brasileira de Tecnologia (OBT)</p><p class="edu-inst" data-pt="Certificada pelo MIT e ITA · App Ruby" data-en="Certified by MIT and ITA · Ruby App">Certificada pelo MIT e ITA · App Ruby</p></div>
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Medalha — Canguru de Matemática" data-en="Medal — Kangaroo Mathematics Competition">Medalha — Canguru de Matemática</p><p class="edu-inst" data-pt="Competição Internacional de Matemática" data-en="International Mathematics Competition">Competição Internacional de Matemática</p></div>
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Excel — Curso Completo" data-en="Excel — Full Course">Excel — Curso Completo</p><p class="edu-inst">Sebrae</p></div>
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Word — Curso Completo" data-en="Word — Full Course">Word — Curso Completo</p><p class="edu-inst">Sebrae</p></div>
+    <div class="edu-card reveal"><p class="edu-degree" data-pt="Outros certificados de olimpíadas" data-en="Additional olympiad certificates">Outros certificados de olimpíadas</p><p class="edu-inst" data-pt="Diversas competições científicas e tecnológicas nacionais" data-en="Various national science and technology competitions">Diversas competições científicas e tecnológicas nacionais</p></div>
   </div>
 </section>
 
-<!-- CONTATO -->
 <div id="contato" class="section-full">
   <div class="section-inner">
-    <p class="label reveal">Fale comigo</p>
-    <h2 class="heading reveal">Contato</h2>
+    <p class="label reveal" data-pt="Fale comigo" data-en="Get in touch">Fale comigo</p>
+    <h2 class="heading reveal" data-pt="Contato" data-en="Contact">Contato</h2>
     <div class="contato-grid">
       <div class="contato-text reveal">
-        <p>Se quiser conversar sobre projetos, colaborações ou oportunidades, pode me chamar pelo e-mail ou telefone abaixo.</p>
-        <p>Também está disponível o download do meu currículo em PDF.</p>
+        <p data-pt="Se quiser conversar sobre projetos, colaborações ou oportunidades, pode me chamar pelo e-mail ou telefone abaixo." data-en="If you'd like to talk about projects, collaborations or opportunities, feel free to reach out by email or phone below.">Se quiser conversar sobre projetos, colaborações ou oportunidades, pode me chamar pelo e-mail ou telefone abaixo.</p>
+        <p data-pt="Também está disponível o download do meu currículo em PDF." data-en="My resume is also available for download as a PDF.">Também está disponível o download do meu currículo em PDF.</p>
         <br/>
-        <a href="curriculo_gabriel.pdf" download class="btn btn-primary">↓ Baixar Currículo PDF</a>
+        <a href="curriculo_gabriel.pdf" download class="btn btn-primary" id="btnDownload2" data-pt="↓ Baixar Currículo PDF" data-en="↓ Download Resume PDF">↓ Baixar Currículo PDF</a>
       </div>
       <div class="contato-links reveal">
-        <a href="mailto:gabrielpsk1402@gmail.com" class="contato-link">
-          <div>
-            <span class="contato-link-label">E-mail</span>
-            <span class="contato-link-value">gabrielpsk1402@gmail.com</span>
-          </div>
-        </a>
-        <a href="tel:+5561992142825" class="contato-link">
-          <div>
-            <span class="contato-link-label">Telefone</span>
-            <span class="contato-link-value">(61) 99214-2825</span>
-          </div>
-        </a>
-        <div class="contato-link">
-          <div>
-            <span class="contato-link-label">Localização</span>
-            <span class="contato-link-value">Brasília, DF — Brasil</span>
-          </div>
-        </div>
+        <a href="mailto:gabrielpsk1402@gmail.com" class="contato-link"><div><span class="contato-link-label">E-mail</span><span class="contato-link-value">gabrielpsk1402@gmail.com</span></div></a>
+        <a href="tel:+5561992142825" class="contato-link"><div><span class="contato-link-label" data-pt="Telefone" data-en="Phone">Telefone</span><span class="contato-link-value">+55 (61) 99214-2825</span></div></a>
+        <div class="contato-link"><div><span class="contato-link-label" data-pt="Localização" data-en="Location">Localização</span><span class="contato-link-value" data-pt="Brasília, DF — Brasil" data-en="Brasília, DF — Brazil">Brasília, DF — Brasil</span></div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <span>Gabriel Piske de Souza Mello Barbosa</span>
-  <span>Brasília, DF &mdash; Brasil</span>
+  <span data-pt="Brasília, DF — Brasil" data-en="Brasília, DF — Brazil">Brasília, DF &mdash; Brasil</span>
 </footer>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
+  let currentLang = 'pt';
+
+  function toggleLang() {
+    currentLang = currentLang === 'pt' ? 'en' : 'pt';
+    const btn = document.getElementById('langToggle');
+    btn.innerHTML = currentLang === 'en' ? '<span class="flag">🇧🇷</span> PT' : '<span class="flag">🇺🇸</span> EN';
+    document.documentElement.lang = currentLang === 'en' ? 'en' : 'pt-BR';
+
+    document.querySelectorAll('[data-pt][data-en]').forEach(el => {
+      el.innerHTML = el.getAttribute('data-' + currentLang);
     });
+
+    const dl1 = document.getElementById('btnDownload');
+    const dl2 = document.getElementById('btnDownload2');
+    const file = currentLang === 'en' ? 'resume_gabriel_en.pdf' : 'curriculo_gabriel.pdf';
+    if (dl1) dl1.setAttribute('href', file);
+    if (dl2) dl2.setAttribute('href', file);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.08 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
-
 </body>
 </html>
